@@ -1,0 +1,23 @@
+// Instalar paquetes
+import SubnetmaskModule from 'get-subnet-mask';
+import fetchTimeout from 'fetch-timeout';
+
+// Get IP address
+  getIP = () => {
+    SubnetmaskModule.getIpV4((ip) => { 
+      this.setState({ 
+        valueIP: ip 
+      });
+      console.log("La dirección IP es " + this.state.valueIP);
+    });
+  }
+
+// Get subnet mask
+  getMask = () => {
+    SubnetmaskModule.getSubnet((sb) => { 
+      this.setState({ 
+        valueMask: sb 
+      });
+      console.log("La máscara de subred es " + this.state.valueMask);
+    });
+  }
