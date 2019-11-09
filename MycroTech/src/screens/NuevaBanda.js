@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, TextInput, Button, Alert, Picker, StatusBar } from 'react-native';
 import { NavigationEvents } from 'react-navigation'
+import NetInfo from "@react-native-community/netinfo";
 
 import MenuButton from '../components/MenuButton'
 
@@ -50,7 +51,17 @@ export default class NuevaBanda extends Component{
                     }
                 })
                 .catch((error) => {
-                    console.error(error);
+                    NetInfo.fetch().then(state => {
+                        if (state.type == "none"){
+                            Alert.alert("Por favor conectese a una red o utilice datos móviles")
+                        }
+                        else if (!state.isInternetReachable){
+                            Alert.alert("Asegurese de que la red tenga acceso a internet")
+                        }
+                        else{
+                            console.error(error);
+                        }
+                    });
                 });  
         }
     }

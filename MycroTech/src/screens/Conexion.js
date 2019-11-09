@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Button, Alert, Picker, ActivityIndicator, StatusBar } from 'react-native';
+import NetInfo from "@react-native-community/netinfo";
 
 import MenuButton from '../components/MenuButton';
 
@@ -138,7 +139,17 @@ export default class Conexion extends Component{
         setTimeout(function(){
             if (requests.length === 0){
                 this.setState({ verificar: true });
-                Alert.alert("No hay brazos en la red", "Verifique que los brazos esten encendidos y conectados a la red o si usted se encuentra en la misma red");
+                NetInfo.fetch().then(state => {
+                    if (state.type == "none"){
+                        Alert.alert("Por favor conectese a una red o utilice datos móviles")
+                    }
+                    else if (!state.isInternetReachable){
+                        Alert.alert("Asegurese de que la red tenga acceso a internet")
+                    }
+                    else{
+                        Alert.alert("No hay brazos en la red", "Verifique que los brazos esten encendidos y conectados a la red o si usted se encuentra en la misma red");
+                    }
+                });
                 requests.push("Empty");
                 global.conectado = !global.conectado
                 this.setState({ 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Alert, Text, TouchableOpacity, StatusBar, TextInput, KeyboardAvoidingView } from 'react-native'
+import NetInfo from "@react-native-community/netinfo";
 
 export default class Recuperar extends Component{
 
@@ -46,7 +47,17 @@ export default class Recuperar extends Component{
                     }
                 })
                 .catch((error) => {
-                    console.error(error);
+                    NetInfo.fetch().then(state => {
+                        if (state.type == "none"){
+                            Alert.alert("Por favor conectese a una red o utilice datos móviles")
+                        }
+                        else if (!state.isInternetReachable){
+                            Alert.alert("Asegurese de que la red tenga acceso a internet")
+                        }
+                        else{
+                            console.error(error);
+                        }
+                    });
                 });  
     }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, StatusBar, Alert } from 'react-native';
 import { NavigationEvents } from 'react-navigation'
+import NetInfo from "@react-native-community/netinfo";
 
 import MenuButton from '../components/MenuButton'
 
@@ -55,6 +56,19 @@ export default class Tema extends Component{
                         Alert.alert("ERROR", "El usuario no existe");
                     }
                 })
+                .catch((error) => {
+                    NetInfo.fetch().then(state => {
+                        if (state.type == "none"){
+                            Alert.alert("Por favor conectese a una red o utilice datos móviles")
+                        }
+                        else if (!state.isInternetReachable){
+                            Alert.alert("Asegurese de que la red tenga acceso a internet")
+                        }
+                        else{
+                            console.error(error);
+                        }
+                    });
+                });
     }
 
     cambiarTemaANegro(){
@@ -83,6 +97,19 @@ export default class Tema extends Component{
                         Alert.alert("ERROR", "El usuario no existe");
                     }
                 })
+                .catch((error) => {
+                    NetInfo.fetch().then(state => {
+                        if (state.type == "none"){
+                            Alert.alert("Por favor conectese a una red o utilice datos móviles")
+                        }
+                        else if (!state.isInternetReachable){
+                            Alert.alert("Asegurese de que la red tenga acceso a internet")
+                        }
+                        else{
+                            console.error(error);
+                        }
+                    });
+                });
     }
 
     render(){

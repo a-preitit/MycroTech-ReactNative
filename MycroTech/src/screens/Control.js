@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, Alert, Picker, StatusBar } from 'react-native';
 import Slider from "react-native-slider";
+import NetInfo from "@react-native-community/netinfo";
 
 import fetchTimeout from 'fetch-timeout';
 
@@ -209,7 +210,17 @@ export default class Control extends Component{
                     }
                 })
                 .catch((error) => {
-                    console.error(error);
+                    NetInfo.fetch().then(state => {
+                        if (state.type == "none"){
+                            Alert.alert("Por favor conectese a una red o utilice datos móviles")
+                        }
+                        else if (!state.isInternetReachable){
+                            Alert.alert("Asegurese de que la red tenga acceso a internet")
+                        }
+                        else{
+                            console.error(error);
+                        }
+                    });
                 });
     }
     

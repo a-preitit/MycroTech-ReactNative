@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Alert, Text, TouchableOpacity, StatusBar, TextInput, KeyboardAvoidingView } from 'react-native'
+import NetInfo from "@react-native-community/netinfo";
 
 export default class Login extends Component{
 
@@ -20,7 +21,7 @@ export default class Login extends Component{
         };
     }
 
-    loginUser = () => {        
+    loginUser = () => {       
         fetch('http://' + global.IP + '/login', {
             method: 'POST',
             headers: {
@@ -63,7 +64,17 @@ export default class Login extends Component{
                     }
                 })
                 .catch((error) => {
-                    console.error(error);
+                    NetInfo.fetch().then(state => {
+                        if (state.type == "none"){
+                            Alert.alert("Por favor conectese a una red o utilice datos móviles")
+                        }
+                        else if (!state.isInternetReachable){
+                            Alert.alert("Asegurese de que la red tenga acceso a internet")
+                        }
+                        else{
+                            console.error(error);
+                        }
+                    });
                 });            
     }
 
