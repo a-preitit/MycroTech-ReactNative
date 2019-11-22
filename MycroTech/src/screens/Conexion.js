@@ -30,7 +30,7 @@ export default class Conexion extends Component{
             this.setState({ 
                 valueIP: ip 
             });
-            console.log("La dirección IP es " + this.state.valueIP);
+            //console.log("La dirección IP es " + this.state.valueIP);
         });
 
         // Get subnet mask
@@ -38,7 +38,7 @@ export default class Conexion extends Component{
             this.setState({ 
                 valueMask: sb 
             });
-            console.log("La máscara de subred es " + this.state.valueMask);
+            //console.log("La máscara de subred es " + this.state.valueMask);
         });
     }
 
@@ -62,7 +62,7 @@ export default class Conexion extends Component{
 
     buscarBrazosBackEnd = () => {
 
-        Alert.alert("Dirección IP y máscara de subred encontrada", "IP: " + this.state.valueIP + "\nMáscara de Subred: " + this.state.valueMask);
+        //Alert.alert("Dirección IP y máscara de subred encontrada", "IP: " + this.state.valueIP + "\nMáscara de Subred: " + this.state.valueMask);
 
         //IPByte es un array que guarda string de la IP, separandolos por el punto
         var IPByte = this.state.valueIP.split(".");
@@ -105,38 +105,42 @@ export default class Conexion extends Component{
                 for (var k = 0; k <= hostsPosiblesCuartoByte; k++){
                     ipHostCuartoByte = mascaraSubredCuartoByte + k;
 
-                        fetchTimeout('http://' + primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString() + ':80/server', {
-                            method: 'POST',
-                            headers: {
-                                Accept: 'application/json',
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                msg: 'Sos el servidor?',
-                                ipEnviado: primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString()
-                            })
-                        }, 6000)
-                            .then((response) => response.json())
-                                .then((responseJson) => {
-                                    if(responseJson.msg === "Si"){
-                                        req = new Promise(function (resolve, reject) {
-                                            resolve({
-                                                ip: responseJson.direccionIP
-                                            })
+                    //fetchTimeout('http://' + primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString() + ':80/server', {
+                    fetchTimeout('http://' + primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString() + ':3000/server', {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            msg: 'Sos el servidor?',
+                            ipEnviado: primerByteIP.toString() + "." + ipHostSegundoByte.toString() + "." + ipHostTercerByte.toString() + "." + ipHostCuartoByte.toString()
+                        })
+                    }, 6000)
+                        .then((response) => response.json())
+                            .then((responseJson) => {
+                                if(responseJson.msg === "Si"){
+                                    console.log(responseJson.direccionIP);
+                                    req = new Promise(function (resolve, reject) {
+                                        resolve({
+                                            ip: responseJson.direccionIP
                                         })
-                                        req.then(function(value) {
-                                            requests.push(value.ip);
-                                        });
-                                    }
-                                })
-                                .catch((error) => {
-                                    //console.error(error);
-                                });
+                                    })
+                                    req.then(function(value) {
+                                        requests.push(value.ip);
+                                        console.log(requests[0]);
+                                    });
+                                }
+                            })
+                            .catch((error) => {
+                                //console.error(error);
+                            });
                 }
             }
         }
 
         setTimeout(function(){
+            console.log(requests.length);
             if (requests.length === 0){
                 this.setState({ verificar: true });
                 NetInfo.fetch().then(state => {
@@ -151,10 +155,6 @@ export default class Conexion extends Component{
                     }
                 });
                 requests.push("Empty");
-                global.conectado = !global.conectado
-                this.setState({ 
-                    buscado: false
-                });
             }
             else{
                 Promise.all(requests).then(() => {
@@ -181,7 +181,13 @@ export default class Conexion extends Component{
                 })
             }
 
+            global.conectado = !global.conectado
+            this.setState({ 
+                buscado: false
+            });
+
             global.brazos = requests;
+            global.pickerValue = global.brazos[0];
             
             this.setState({
                 buscado: true,
@@ -189,6 +195,7 @@ export default class Conexion extends Component{
             });
 
             if (requests[0] != "Empty"){
+                global.con = true;
                 this.props.navigation.navigate('Control');
             }
             
@@ -232,9 +239,9 @@ export default class Conexion extends Component{
 
     comprobarConf = () => {
         if(!global.conectado){
-            return <Text style={styles.confTxt}>Ir a configuración</Text>
+            return <Text style={styles.confTxt}>Si lo estás, ¡busca brazos!</Text>
         }else{
-            return <Text style={{color: '#fff', fontSize: 30}}>Ir a configuración</Text>
+            return <Text style={{color: '#fff', fontSize: 30}}>Si lo estás, ¡busca brazos!</Text>       
         }
     }
 

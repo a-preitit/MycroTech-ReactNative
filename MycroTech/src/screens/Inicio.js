@@ -19,6 +19,8 @@ export default class Inicio extends Component{
         global.temaNegro = false;
         global.recuperar = null;
         global.conectado = false;
+        global.pickerValue = global.brazos[0];
+        global.con = false;
 
         global.screenWidth = Math.round(Dimensions.get('window').width);
         global.screenHeight = Math.round(Dimensions.get('window').height);
@@ -31,6 +33,8 @@ export default class Inicio extends Component{
 
     
     render(){
+        console.disableYellowBox = true;
+        
         return(
 
                 <ImageBackground style={styles.container} source={require('../images/fondo.png')} imageStyle={{opacity: 1}}>
@@ -39,7 +43,7 @@ export default class Inicio extends Component{
 
 
                     <View style={styles.titleView}>
-                        <Text style={styles.title}>MYCROTECH</Text>
+                        {/*Text style={styles.title}>MYCROTECH</Text>*/}
                         <Image style={styles.logo} source={require('../images/Micro2.png')} />
                     </View>
 
@@ -98,9 +102,10 @@ const styles = StyleSheet.create({
     //    fontFamily: 'sans-serif'
     },
     logo: {
-        marginTop: 20,
-        width: 130,
-        height: 130
+        marginTop: 400,
+        marginLeft: 10,
+        width: 420,
+        height: 420
     },
     btn: {
         height: 40,
@@ -116,7 +121,7 @@ const styles = StyleSheet.create({
         opacity: 0.85
     },
     sobreNostrosView: {
-        marginBottom: 23,
+        marginBottom: 40,
         backgroundColor: 'rgba(0,0,0,0)',
     },
     txtBtn: {

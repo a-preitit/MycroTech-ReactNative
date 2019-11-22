@@ -37,7 +37,7 @@ export default class MenuDrawer extends React.Component {
                     </View>
                     <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/controlIcon.png')} style={styles.img} />
-                        {this.navLink('Conexion','Control')}
+                        {this.navLink('Conexion','Conectar')}
                     </View>
                     <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/sesionesIcon.png')} style={styles.img} />
@@ -77,13 +77,13 @@ export default class MenuDrawer extends React.Component {
                     </View>
                     <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/notaIcon.png')} style={styles.img} />
-                        {this.navLink('SobreNosotros','Canciones')}
+                        {this.navLink('Canciones','Canciones')}
                     </View>
                     <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
                         <Image source={require('../images/icons/colorIcon.png')} style={styles.img} />
-                        {this.navLink('Tutorial','Color')}
+                        {this.navLink('Tema','Tema')}
                     </View>
-                    <View style={this.state.temaNegro ? styles.darkMenuIconsContrainer : styles.menuIconsContrainer}>
+                    <View style={this.state.temaNegro ? styles.darkMenuIconsContrainerSession : styles.menuIconsContrainerSession}>
                         <TouchableOpacity style={styles.siguienteBtn} onPress={() => this.cerrarSesion()}>  
                             <Text style = {styles.interactivoStyle}>Cerrar sesión</Text>   
                         </TouchableOpacity>
@@ -149,11 +149,19 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginBottom: 10
     },
+    menuIconsContrainerSession: {
+        borderColor: 'rgba(0,0,0,0.2)',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    darkMenuIconsContrainerSession: {
+        borderColor: 'rgba(255,255,255,0.2)',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     cerrarBtnContainer: {
-        height: 150,
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        justifyContent: 'center'
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     profile: {
         flex: 1,

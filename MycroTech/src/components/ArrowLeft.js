@@ -21,10 +21,6 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50
     },
-    imageStyle: {
-        width: 50,
-        height: 50
-    },
     btnStyle: {
         width: 50,
         height: 50

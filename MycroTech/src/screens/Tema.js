@@ -193,12 +193,14 @@ const styles = StyleSheet.create({
         
     },
     header: {
-        flex: 0.4,
-        backgroundColor: 'rgba(200,200,200,1)',
+        flex: 0.26,
+        backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        marginBottom: 10
+        marginBottom: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(0,0,0,0.3)'
     },
     titulo: {
         fontSize: 30,
@@ -232,8 +234,8 @@ const styles = StyleSheet.create({
         height: 50
     },
     btnStyle: {
-        width: 50,
-        height: 50
+        width: 60,
+        height: 60 
     },
     temaImage: {
         width: 350,

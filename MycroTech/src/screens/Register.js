@@ -50,7 +50,7 @@ export default class Register extends Component{
                             if(responseJson.msg === "Listo"){
                                 global.nombre = this.state.username;
                                 Alert.alert("Registro realizado correctamente");
-                                this.props.navigation.navigate('Menu');
+                                this.props.navigation.navigate('Tutorial');
                             }
                             else if(responseJson.msg === "Error"){
                                 this.setState({ wrongUsername: true });
@@ -125,7 +125,13 @@ export default class Register extends Component{
 
                 
                 <KeyboardAvoidingView style={styles.container}>
-                  
+                    
+                    <View style={styles.menuIcon}>
+                            <TouchableOpacity style={styles.btnStyle} onPress={() => this.props.navigation.goBack()} >
+                                <Image source={require('../images/icons/goBackIcon.png')} style={styles.menuIcon}/>
+                            </TouchableOpacity>
+                    </View>
+
                     <StatusBar barStyle="light-content" />
 
                     <View style={styles.titleView}>
@@ -277,6 +283,14 @@ const styles = StyleSheet.create({
     txtBtn: {
         fontSize: 20,
         color: '#fff',
+    },
+    menuIcon: {
+        zIndex: 9,
+        position: 'absolute',
+        left: 13,
+        top: 12,
+        width: 50,
+        height: 50
     },
    
 });

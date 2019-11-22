@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Alert, StatusBar } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, Picker, StatusBar, Alert } from 'react-native';
 import { NavigationEvents } from 'react-navigation'
 
 import MenuButton from '../components/MenuButton'
@@ -11,29 +11,55 @@ export default class Menu extends Component{
         super( props );
         this.state = {
             bandaSelect: "",
-            temaNegro: false, 
-            con: false
+            temaNegro: false,
+            con: false,
+            pValue: "",
 
         };
     }
 
+    actualizar(neww){
+        const nuevoValue = neww
+        this.setState({ pValue: nuevoValue }, function () {
+            console.log(this.state.pValue);
+        });
+        console.log("pValue: " + this.state.pValue + " y nuevoValue: " + nuevoValue);
+        global.pickerValue = nuevoValue;
+    }
+
     render(){
         
+        let IPs = global.brazos.map((s, i) => {
+            return <Picker.Item key={i} value={s} label={s} />
+        });
+
         return(
             <View style={this.state.temaNegro ? styles.darkContainer : styles.container}>
 
                 <NavigationEvents
-                    onDidFocus={() => this.setState({
-                        bandaSelect: global.bandaActual,
-                        temaNegro: global.temaNegro,
-                        con: global.conectado
-                    })}
+                    onDidFocus={() => {
+                            this.setState({
+                                bandaSelect: global.bandaActual,
+                                temaNegro: global.temaNegro,
+                                pValue: global.pickerValue
+                            });
+                        }
+                    }
                 />
 
                 <StatusBar hidden/>
 
                 <View style={styles.header}>
-                        <Text style={styles.titulo}>{global.nombre}</Text>
+                        <View style={{height: '50%', width: '55%', borderRadius: 20, borderWidth: 2, borderColor: '#bdc3c7'}}>
+                            <Picker
+                                style={styles.picker}
+                                selectedValue={this.state.pValue}
+                                onValueChange={nuevoValue => this.actualizar(nuevoValue)}
+                            >
+                                {IPs}
+
+                            </Picker>
+                        </View>
                         <MenuButton navigation={this.props.navigation} />
                 </View>
                 
@@ -47,7 +73,7 @@ export default class Menu extends Component{
 
                 <View style={styles.btnsContainer}>
                     <View style={styles.duoContainer}>
-                        <TouchableOpacity style={this.state.temaNegro ? styles.darkCartContainer : styles.cartContainer} onPress={this.state.con ? () => this.props.navigation.navigate('Control') : () => this.props.navigation.navigate('Conexion')}>
+                        <TouchableOpacity style={this.state.temaNegro ? styles.darkCartContainer : styles.cartContainer} onPress={global.con ? () => this.props.navigation.navigate('Control') : () => this.props.navigation.navigate('Conexion')}>
                             <Image source={require('../images/icons/controlIcon.png')} style={styles.iconsStyle}/>
                             <Text style={styles.txtStyle}>Control</Text>    
                         </TouchableOpacity>
@@ -113,7 +139,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
-        width: 170,
+        width: '44%',
         height: 170,
         borderBottomWidth: 4,
         borderLeftWidth: 2,
@@ -150,11 +176,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'black'
     },
     header: {
-        flex: 0.248,
-        backgroundColor: 'rgba(170,170,170,1)',
+        flex: 0.18,
+        backgroundColor: 'rgba(165,165,165,1)',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(0,0,0,0.3)'
     },
     titulo: {
         fontSize: 30,
@@ -163,7 +191,7 @@ const styles = StyleSheet.create({
     },  
     estudioImg: {
         width: 430,
-        height: 285,
+        height: '100%',
         opacity: .55
     },
     darkEstudioImg: {
@@ -186,6 +214,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
         
+    },
+    picker: {
+        height: '100%',
+        width: '100%',
     },
     bandaTxt: {
         fontSize: 15,
