@@ -22,15 +22,24 @@ export default class Canciones extends Component{
     } 
    
     chequearCanciones(){
+        let duplicado = false;
         this.setState({
             cancionesList: global.canciones,
             temaNegro: global.temaNegro
         })
         for(let i = 0; i < this.state.cancionesList.length; i++){
+            console.log(this.state.cancionesList[i]);
             const res = this.state.cancionesList[i].split('.');
 
             if(res[0] == global.bandaActual){
-                this.state.cancionesBandaActual.push(res[1])
+                for (let i = 0; i < this.state.cancionesBandaActual.length; i++){
+                    if (res[1] == cancionesBandaActual[i]){
+                        duplicado = true;
+                    }
+                }
+                if (!duplicado){
+                    this.state.cancionesBandaActual.push(res[1])
+                }
             }
         }
     }
@@ -78,7 +87,7 @@ export default class Canciones extends Component{
                             </View>
                         }
                         ListEmptyComponent={
-                            <Text style={this.state.temaNegro ? styles.darkVacioTxt : styles.vacioTxt}>Actualmente no tienes canciones.</Text>
+                            <Text style={this.state.temaNegro ? styles.darkVacioTxt : styles.vacioTxt}>Actualmente no tienes canciones</Text>
                         }
                     />
                 </View> 
@@ -121,7 +130,9 @@ const styles = StyleSheet.create({
        borderBottomColor: '#707070'
     },
     cancionesContainer: {
-       flex: 2
+       flex: 2,
+       marginLeft: 40,
+       marginTop: 10
     },
     cartContainer: {
         marginTop: 20,
@@ -139,8 +150,8 @@ const styles = StyleSheet.create({
         height: 80,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
-        
+        alignItems: 'center',
+        marginLeft: 10
     },
     header: {
         flex: 0.3,
@@ -217,7 +228,7 @@ const styles = StyleSheet.create({
     addBtnContainer: {
         position: 'absolute',
         top: '90%',
-        left: '27%',
+        left: '20%',
     },
     btn: {
         height: 50,

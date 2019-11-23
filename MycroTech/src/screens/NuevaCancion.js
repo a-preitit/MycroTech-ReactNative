@@ -44,7 +44,7 @@ export default class NuevaCancion extends Component{
                     if(responseJson.msg === "Listo"){
                         global.bandas.forEach(function(item, index){
                             if (item === global.bandaActual){
-                                nuevaCancion = index.toString() + "." + nuevaCancion;
+                                nuevaCancion = item.toString() + "." + nuevaCancion;
                                 global.canciones.push(nuevaCancion);
                             }
                         })

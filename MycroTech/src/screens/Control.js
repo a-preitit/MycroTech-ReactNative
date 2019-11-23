@@ -554,12 +554,7 @@ const styles = StyleSheet.create({
         height: 40,
         marginRight: 30,
         marginBottom: 30    
-    },
-    goBackBtn: {
-        
     }
-    
-
 });
 
 var customStyles4 = StyleSheet.create({

@@ -208,8 +208,8 @@ const styles = StyleSheet.create({
     },
     bandaActualContainer: {
         position: 'absolute',
-        top: '54%',
-        left: '56%',
+        top: '52.5%',
+        left: '53%',
         width: 150,
         alignItems: 'center',
         justifyContent: 'center'

@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
         opacity: 0.85
     },
     sobreNostrosView: {
-        marginBottom: 40,
+        marginBottom: 30,
         backgroundColor: 'rgba(0,0,0,0)',
     },
     txtBtn: {

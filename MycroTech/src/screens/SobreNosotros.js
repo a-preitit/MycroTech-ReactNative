@@ -34,16 +34,16 @@ export default class Tutorial extends Component{
         if(this.state.currentIndex == 0  ){
             //Item 1;
             return( 
-                    <Text style = {styles.interactivoStyle}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tincidunt, velit sed sollicitudin tincidunt, nisi lorem faucibus sapien, quis placerat.</Text>   
+                    <Text style = {styles.interactivoStyle}>MycroTech cuenta con una variedad de utilidades que se adecuan a usted. Podrá cambiar la tonalidad de colores y elegir con que banda está trabajando ahora y sus canciones.</Text>   
             )
         }
         else if(this.state.currentIndex == 1){
             return( 
-                    <Text style = {styles.interactivoStyle}>Maecenas tincidunt, velit sed sollicitudin tincidunt, nisi lorem faucibus sapien, quis placerat. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>   
+                    <Text style = {styles.interactivoStyle}>Con MycroTech podrá operar todos los microfonos del estudio, sin tener que moverse de su asiento. Simplemente mueva los circulos en el eje hacia la ubicación deseada.</Text>   
             )
         }else{
             return( 
-                    <Text style = {styles.interactivoStyle}>Sed sollicitudin tincidunt, Maecenas tincidunt, velit  nisi lorem faucibus sapien, quis placerat. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>   
+                    <Text style = {styles.interactivoStyle}>MycroTech es sinonimo de comodidad es por ello que nos preocupamos por ofrecerle la mejor aplicación. Nuestro sistema de control mover el micrófono en movimientos más largos.</Text>   
             )
         }
     
@@ -67,7 +67,7 @@ export default class Tutorial extends Component{
     checkLeftArrow = () => {
         if(this.state.currentIndex == 1 || this.state.currentIndex == 2){
             return (
-                <TouchableOpacity style={styles.btnStyle} onPress={() => this.carousel._snapToItem(this.state.currentIndex-1)}>
+                <TouchableOpacity style={styles.btnStyleLeft} onPress={() => this.carousel._snapToItem(this.state.currentIndex-1)}>
                     <Image source={require('../images/icons/controlLeft.png')} style={styles.menuIcon}/>
                 </TouchableOpacity>
             )
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
 
     },
     header: {
-        flex: 0.1,
+        flex: 0.01,
         backgroundColor: 'rgba(235,235,235,1)',
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     carouselContainerPosta: {
+        marginTop: 70
     },  
     titleContainer: {
         alignItems: 'center',
@@ -184,10 +185,11 @@ const styles = StyleSheet.create({
         marginTop: 30
     },
     imgStyle: {
-        width: 320,
+        width: 300,
         height: 480,
         paddingVertical: 15,
         paddingHorizontal: 10,
+        marginLeft: 0,
         borderWidth: 2,
         borderColor: "rgba(112,112,112,0.5)",
         borderRadius: 10,
@@ -203,9 +205,10 @@ const styles = StyleSheet.create({
 
     },
     interactivoStyle: {
-        fontSize: 19,
+        fontSize: 15,
         color: '#000',
-        textAlign: 'center'
+        textAlign: 'center',
+        marginHorizontal: 8,
     },
     siguienteBtn: {
         height: 50,
@@ -233,7 +236,13 @@ const styles = StyleSheet.create({
     },
     btnStyle: {
         width: 50,
-        height: 50
+        height: 50,
+        marginRight: 10
+    },
+    btnStyleLeft: {
+        width: 50,
+        height: 50,
+        marginRight: 23
     }
 
 });
