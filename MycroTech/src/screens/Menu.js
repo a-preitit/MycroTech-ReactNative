@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     },
     darkEstudioImg: {
         width: 430,
-        height: 285,
+        height: "100%",
     },
     iconsStyle: {
         height: 70,

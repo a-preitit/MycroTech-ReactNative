@@ -250,13 +250,13 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: '200',
         textAlign: 'center',
-        marginRight: 45
+        marginLeft: "1%"
     },
     darkBandaTxt: {
-        fontSize: 20,
+        fontSize: 30,
         fontWeight: '200',
         textAlign: 'center',
-        marginRight: 35,
+        marginLeft: "1%",
         color: 'white'
     },
     menuIcon: {

@@ -79,9 +79,10 @@ const styles = StyleSheet.create({
 
     },
     titleView: {
-        flex: 3,
+        flex: 4,
         alignItems: 'center',
-        justifyContent: 'flex-end', 
+        justifyContent: 'flex-end',
+        marginRight: 10 
     },
  
     textView: {

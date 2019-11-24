@@ -31,13 +31,18 @@ export default class Control extends Component{
 
             isModalXvisible: false,
             isModalZvisible: false,
+            isModalRvisible: false,
             stepX: 1,
             stepZ: 1,
+            step: 1,
 
             timer: null,
 
             actualPreset: 0,
             temaNegro: false,
+
+            startAngle: 1.25 * Math.PI,
+            angleLength: Math.PI * 7/6,
         } 
     
     }    
@@ -96,6 +101,29 @@ export default class Control extends Component{
         this.setState({lastValueX: this.state.valueX});
         setTimeout(function(){
             this.sendData("X", this.state.valueX, false, null);
+        }.bind(this), 1);        
+    }
+
+    sendSliderR = (lastValueR) => {
+        if (this.state.valueR !== this.state.lastValueR){
+            this.setState({ lastValueR });
+            this.sendData("R", this.state.valueR, false, null);
+        }
+    }
+
+    buttonSliderNR = () => {
+        this.setState({valueR: this.state.valueR - parseInt(this.state.stepR)});
+        this.setState({lastValueR: this.state.valueR});
+        setTimeout(function(){
+            this.sendData("R", this.state.valueR, false, null);
+        }.bind(this), 1); 
+    }
+
+    buttonSliderPR = () => {
+        this.setState({valueR: this.state.valueR + parseInt(this.state.stepR)});
+        this.setState({lastValueR: this.state.valueR});
+        setTimeout(function(){
+            this.sendData("R", this.state.valueR, false, null);
         }.bind(this), 1);        
     }
 
@@ -241,16 +269,34 @@ export default class Control extends Component{
     changeModalXVisibility = (bool) => {
         this.setState({ isModalXvisible: bool });
     }
+
+    changeModalRVisibility = (bool) => {
+        this.setState({ isModalRvisible: bool });
+    }
+
     changeModalZVisibility = (bool) => {
         this.setState({ isModalZvisible: bool });
     }
 
     setStepX = (data) => {
+        if (data == 0){
+            data = 1;
+        }
         this.setState({ stepX: data})
     }
 
     setStepZ = (data) => {
+        if (data == 0){
+            data = 1;
+        }
         this.setState({ stepZ: data})
+    }
+
+    setStepR = (data) => {
+        if (data == 0){
+            data = 1;
+        }
+        this.setState({ stepR: data})
     }
     
     render(){         
@@ -347,9 +393,13 @@ export default class Control extends Component{
                 <Modal transparent ={true} visible={this.state.isModalZvisible} onRequestClose={() => this.changeModalZVisibility(false)} animationType='fade'>
                     <StepModal changeModalVisibility={this.changeModalZVisibility} setData={this.setStepZ}/>
                 </Modal>
+
+                <Modal transparent ={true} visible={this.state.isModalRvisible} onRequestClose={() => this.changeModalRVisibility(false)} animationType='fade'>
+                    <StepModal changeModalVisibility={this.changeModalRVisibility} setData={this.setStepR}/>
+                </Modal>
                         
 
-                <View style={styles.sliderRContainer}>
+                <View style={styles.sliderXContainer}>
 
                     {/* <CircularSlider
                         style={styles.halfCircleSlider}
@@ -369,11 +419,34 @@ export default class Control extends Component{
                         linearGradient={[{ stop: '100%', color: this.state.temaNegro ? '#fff' : '#000' }, { stop: '100%', color: '#000' }]}                        >
                     </CircularSlider> */}
 
-                    <TouchableOpacity style={styles.PresetbtnStyle} onPress={() => this.saveActualPreset(this.state.actualPreset)}>
-                            <Image source={require('../images/icons/saveIcon.png')} style={styles.saveIcon}/>
+
+                    <TouchableOpacity style={styles.btnStyle} onPress={this.buttonSliderNR} onLongPress={() => this.changeModalRVisibility(true)}>
+                        <Image source={this.state.temaNegro ? require('../images/icons/darkControlLeft.png') : require('../images/icons/controlLeft.png')} style={styles.menuIcon}/>
+                    </TouchableOpacity>
+
+                    <Slider
+                        trackStyle={this.state.temaNegro ? customStyles4.darkTrack : customStyles4.track}
+                        thumbStyle={customStyles4.thumb}
+                        minimumTrackTintColor={this.state.temaNegro ? '#fff' : '#000'}
+                        minimumValue={-100}
+                        maximumValue={100}
+                        step={1}
+                        value={this.state.valueR}
+                        onValueChange={valueR => this.setState({ valueR })}   
+                        onSlidingComplete={this.sendSliderR}   
+                        style={styles.sliderX}  
+                                            
+                    />
+
+                    <TouchableOpacity style={styles.btnStyle} onPress={this.buttonSliderPR} onLongPress={() => this.changeModalRVisibility(true)}>
+                        <Image source={this.state.temaNegro ? require('../images/icons/darkControlRight.png') : require('../images/icons/controlRight.png')} style={styles.menuIcon}/>
                     </TouchableOpacity>
 
                 </View>
+
+                <TouchableOpacity style={styles.PresetbtnStyle} onPress={() => this.saveActualPreset(this.state.actualPreset)}>
+                        <Image source={require('../images/icons/saveIcon.png')} style={styles.saveIcon}/>
+                </TouchableOpacity>
 
             </View>
 
@@ -414,9 +487,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'flex-end',
-        marginTop: 60,
-        marginBottom: 70
-        
+        marginTop: 60
     },
     circleButtonsContainer: {
         top: 15,
@@ -552,8 +623,9 @@ const styles = StyleSheet.create({
     PresetbtnStyle: {
         width: 40,
         height: 40,
-        marginRight: 30,
-        marginBottom: 30    
+        marginLeft: "78%",
+        marginBottom: "10%",
+        marginTop: 70    
     }
 });
 
