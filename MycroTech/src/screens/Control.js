@@ -66,7 +66,12 @@ export default class Control extends Component{
     }
 
     buttonVerticalSliderN = () => {
-        this.setState({valueZ: this.state.valueZ - parseInt(this.state.stepZ)});
+        if (this.state.valueZ - parseInt(this.state.stepZ) < -100){
+            this.setState({valueZ: -100})
+        }
+        else{
+            this.setState({valueZ: this.state.valueZ - parseInt(this.state.stepZ)});
+        }
         this.setState({lastValueZ: this.state.valueZ});
         setTimeout(function(){
             this.sendData("Z", this.state.valueZ, false, null);
@@ -74,7 +79,12 @@ export default class Control extends Component{
     }
 
     buttonVerticalSliderP = () => {
-        this.setState({valueZ: this.state.valueZ + parseInt(this.state.stepZ)});
+        if (this.state.valueZ + parseInt(this.state.stepZ) > 100){
+            this.setState({valueZ: 100})
+        }
+        else{
+            this.setState({valueZ: this.state.valueZ + parseInt(this.state.stepZ)});
+        }
         this.setState({lastValueZ: this.state.valueZ});
         setTimeout(function(){
             this.sendData("Z", this.state.valueZ, false, null);
@@ -89,7 +99,12 @@ export default class Control extends Component{
     }
 
     buttonSliderN = () => {
-        this.setState({valueX: this.state.valueX - parseInt(this.state.stepX)});
+        if (this.state.valueX - parseInt(this.state.stepX) < -100){
+            this.setState({valueX: -100})
+        }
+        else{
+            this.setState({valueX: this.state.valueX - parseInt(this.state.stepX)});
+        }
         this.setState({lastValueX: this.state.valueX});
         setTimeout(function(){
             this.sendData("X", this.state.valueX, false, null);
@@ -97,7 +112,12 @@ export default class Control extends Component{
     }
 
     buttonSliderP = () => {
-        this.setState({valueX: this.state.valueX + parseInt(this.state.stepX)});
+        if (this.state.valueX + parseInt(this.state.stepX) > 100){
+            this.setState({valueX: 100})
+        }
+        else{
+            this.setState({valueX: this.state.valueX + parseInt(this.state.stepX)});
+        }
         this.setState({lastValueX: this.state.valueX});
         setTimeout(function(){
             this.sendData("X", this.state.valueX, false, null);
@@ -112,7 +132,12 @@ export default class Control extends Component{
     }
 
     buttonSliderNR = () => {
-        this.setState({valueR: this.state.valueR - parseInt(this.state.stepR)});
+        if (this.state.valueR - parseInt(this.state.stepR) < -100){
+            this.setState({valueR: -100})
+        }
+        else{
+            this.setState({valueR: this.state.valueR - parseInt(this.state.stepR)});
+        }
         this.setState({lastValueR: this.state.valueR});
         setTimeout(function(){
             this.sendData("R", this.state.valueR, false, null);
@@ -120,8 +145,12 @@ export default class Control extends Component{
     }
 
     buttonSliderPR = () => {
-        this.setState({valueR: this.state.valueR + parseInt(this.state.stepR)});
-        this.setState({lastValueR: this.state.valueR});
+        if (this.state.valueR + parseInt(this.state.stepR) > 100){
+            this.setState({valueR: 100})
+        }
+        else{
+            this.setState({valueR: this.state.valueR + parseInt(this.state.stepR)});
+        }
         setTimeout(function(){
             this.sendData("R", this.state.valueR, false, null);
         }.bind(this), 1);        
