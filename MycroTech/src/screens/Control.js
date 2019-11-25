@@ -34,15 +34,12 @@ export default class Control extends Component{
             isModalRvisible: false,
             stepX: 1,
             stepZ: 1,
-            step: 1,
+            stepR: 1,
 
             timer: null,
 
             actualPreset: 0,
             temaNegro: false,
-
-            startAngle: 1.25 * Math.PI,
-            angleLength: Math.PI * 7/6,
         } 
     
     }    
@@ -66,7 +63,7 @@ export default class Control extends Component{
     }
 
     buttonVerticalSliderN = () => {
-        if (this.state.valueZ - parseInt(this.state.stepZ) < -100){
+        if (this.state.valueZ - parseInt(this.state.stepZ) <= -100){
             this.setState({valueZ: -100})
         }
         else{
@@ -79,7 +76,7 @@ export default class Control extends Component{
     }
 
     buttonVerticalSliderP = () => {
-        if (this.state.valueZ + parseInt(this.state.stepZ) > 100){
+        if (this.state.valueZ + parseInt(this.state.stepZ) >= 100){
             this.setState({valueZ: 100})
         }
         else{
@@ -99,7 +96,7 @@ export default class Control extends Component{
     }
 
     buttonSliderN = () => {
-        if (this.state.valueX - parseInt(this.state.stepX) < -100){
+        if (this.state.valueX - parseInt(this.state.stepX) <= -100){
             this.setState({valueX: -100})
         }
         else{
@@ -112,7 +109,7 @@ export default class Control extends Component{
     }
 
     buttonSliderP = () => {
-        if (this.state.valueX + parseInt(this.state.stepX) > 100){
+        if (this.state.valueX + parseInt(this.state.stepX) >= 100){
             this.setState({valueX: 100})
         }
         else{
@@ -132,7 +129,7 @@ export default class Control extends Component{
     }
 
     buttonSliderNR = () => {
-        if (this.state.valueR - parseInt(this.state.stepR) < -100){
+        if (this.state.valueR - parseInt(this.state.stepR) <= -100){
             this.setState({valueR: -100})
         }
         else{
@@ -145,7 +142,7 @@ export default class Control extends Component{
     }
 
     buttonSliderPR = () => {
-        if (this.state.valueR + parseInt(this.state.stepR) > 100){
+        if (this.state.valueR + parseInt(this.state.stepR) >= 100){
             this.setState({valueR: 100})
         }
         else{
@@ -169,8 +166,8 @@ export default class Control extends Component{
 
     sendData = (direccion, valor, preset, nroPreset) => {
         let IP = global.pickerValue;
-        //fetchTimeout('http://' + IP + ':80/move', {
-        fetchTimeout('http://' + IP + ':3000/move', {
+        fetchTimeout('http://' + IP + ':80/move', {
+        //fetchTimeout('http://' + IP + ':3000/move', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
